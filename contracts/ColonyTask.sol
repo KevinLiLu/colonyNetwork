@@ -133,6 +133,14 @@ contract ColonyTask is ColonyStorage {
     emit TaskAdded(taskCount);
   }
 
+  function makeTask(bytes32 _specificationHash, uint256 _domainId, uint256 _dueDate) public
+  auth
+  domainExists(_domainId)
+  {
+    /* makeTask(_specificationHash, _domainId);
+    setTaskDueDate(taskCount, _dueDate); */
+  }
+
   function getTaskCount() public view returns (uint256) {
     return taskCount;
   }
