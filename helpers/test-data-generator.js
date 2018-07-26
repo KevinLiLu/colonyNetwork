@@ -241,8 +241,8 @@ export async function giveUserCLNYTokens(colonyNetwork, address, _amount) {
   const clnyAddress = await metaColony.getToken();
   const clny = await Token.at(clnyAddress);
   const amount = new BN(_amount);
-  const mainStartingBalance = await clny.balanceOf(manager);
-  const targetStartingBalance = await clny.balanceOf(address);
+  const mainStartingBalance = await clny.balanceOf.call(manager);
+  const targetStartingBalance = await clny.balanceOf.call(address);
   await metaColony.mintTokens(amount.muln(3).toString());
 
   await metaColony.claimColonyFunds(clny.address);
