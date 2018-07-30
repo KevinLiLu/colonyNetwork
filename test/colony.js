@@ -1624,11 +1624,11 @@ contract("Colony", accounts => {
       const networkBalanceBefore = await token.balanceOf(colonyNetwork.address);
       await colony.claimPayout(taskId, MANAGER_ROLE, token.address);
       const networkBalanceAfter = await token.balanceOf(colonyNetwork.address);
-      expect(networkBalanceAfter.sub(networkBalanceBefore)).to.eq.BN(toBN(1 * 1e18));
+      assert.isTrue(networkBalanceAfter.sub(networkBalanceBefore).eq(toBN(1 * 1e18)));
       const balance = await token.balanceOf(MANAGER);
-      expect(balance).to.eq.BN(toBN(99 * 1e18));
+      assert.isTrue(balance.eq(toBN(99 * 1e18)));
       const potBalance = await colony.getPotBalance(2, token.address);
-      expect(potBalance).to.eq.BN(toBN(250 * 1e18));
+      assert.isTrue(potBalance.eq(toBN(250 * 1e18)));
     });
 
     it("should payout agreed ether for a task", async () => {

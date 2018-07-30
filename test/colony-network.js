@@ -70,13 +70,13 @@ contract("ColonyNetwork", accounts => {
 
       const updatedColonyVersion = await colonyNetwork.getCurrentColonyVersion();
       assert.equal(updatedColonyVersion.toNumber(), updatedVersion);
-      const currentResolver = await colonyNetwork.getColonyVersionResolver.call(updatedVersion);
+      const currentResolver = await colonyNetwork.getColonyVersionResolver(updatedVersion);
       assert.equal(currentResolver.toLowerCase(), sampleResolver);
     });
 
     it("when registering a lower version of the Colony contract, should NOT update the current (latest) colony version", async () => {
       const sampleResolver = "0x65a760e7441cf435086ae45e14a0c8fc1080f54c";
-      const currentColonyVersion = await colonyNetwork.getCurrentColonyVersion.call();
+      const currentColonyVersion = await colonyNetwork.getCurrentColonyVersion();
       await colonyNetwork.addColonyVersion(currentColonyVersion.subn(1).toNumber(), sampleResolver);
 
       const updatedColonyVersion = await colonyNetwork.getCurrentColonyVersion();
@@ -212,7 +212,7 @@ contract("ColonyNetwork", accounts => {
       await colonyNetwork.addColonyVersion(newVersion, sampleResolver);
 
       await colony.upgrade(newVersion);
-      const colonyResolver = await colonyEtherRouter.resolver.call();
+      const colonyResolver = await colonyEtherRouter.resolver();
       assert.equal(colonyResolver.toLowerCase(), sampleResolver);
     });
 
@@ -236,7 +236,7 @@ contract("ColonyNetwork", accounts => {
       const colony = await Colony.at(colonyAddress);
 
       const sampleResolver = "0x65a760e7441cf435086ae45e14a0c8fc1080f54c";
-      const currentColonyVersion = await colonyNetwork.getCurrentColonyVersion.call();
+      const currentColonyVersion = await colonyNetwork.getCurrentColonyVersion();
       const newVersion = currentColonyVersion.subn(1).toNumber();
       await colonyNetwork.addColonyVersion(newVersion, sampleResolver);
 

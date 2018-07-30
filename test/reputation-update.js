@@ -233,7 +233,7 @@ contract("Colony Reputation Updates", accounts => {
 
       // Check the task pot is correctly funded with the max amount
       const taskPotBalance = await metaColony.getPotBalance(2, colonyToken.address);
-      expect(taskPotBalance).to.eq.BN(maxUIntNumber);
+      assert.isTrue(taskPotBalance.eq(maxUIntNumber));
 
       await checkErrorRevert(metaColony.finalizeTask(taskId));
     });

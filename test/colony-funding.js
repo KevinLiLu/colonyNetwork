@@ -412,7 +412,7 @@ contract("Colony Funding", accounts => {
       await colony.finalizeTask(taskId);
       await checkErrorRevert(colony.moveFundsBetweenPots(2, 1, 40, otherToken.address), "colony-funding-task-bad-state");
       const colonyPotBalance = await colony.getPotBalance(2, otherToken.address);
-      expect(colonyPotBalance).to.eq.BN(toBN(350 * 10 ** 18));
+      assert.isTrue(colonyPotBalance.eq(toBN(350 * 1e18)));
     });
 
     it("should allow funds to be removed from a task if there are no more payouts of that token to be claimed", async () => {
