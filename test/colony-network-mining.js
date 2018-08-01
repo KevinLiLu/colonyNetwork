@@ -77,7 +77,7 @@ contract("ColonyNetworkMining", accounts => {
     let repCycle = await ReputationMiningCycle.at(addr);
 
     await forwardTime(3600, this);
-    await repCycle.submitRootHash("0x00", 0, 10);
+    await repCycle.submitRootHash("0x01", 0, 10);
     await repCycle.confirmNewHash(0);
 
     // Advance another reputation cycle
@@ -1473,7 +1473,13 @@ contract("ColonyNetworkMining", accounts => {
       let addr = await colonyNetwork.getReputationMiningCycle(true);
       await forwardTime(3600, this);
       let repCycle = await ReputationMiningCycle.at(addr);
+      await repCycle.submitRootHash("0x01", 0, 10);
       await repCycle.confirmNewHash(0);
+      await forwardTime(3600, this);
+      addr = await colonyNetwork.getReputationMiningCycle(true);
+      repCycle = await ReputationMiningCycle.at(addr);
+
+      badClient = new MaliciousReputationMinerExtraRep(
         { loader: contractLoader, minerAddress: OTHER_ACCOUNT, realProviderPort: REAL_PROVIDER_PORT, useJsTree },
         27,
         0xfffffffff
@@ -1991,13 +1997,13 @@ contract("ColonyNetworkMining", accounts => {
           await giveUserCLNYTokensAndStake(colonyNetwork, MAIN_ACCOUNT, "1000000000000000000");
           await giveUserCLNYTokensAndStake(colonyNetwork, OTHER_ACCOUNT, "1000000000000000000");
 
-          let addr = await colonyNetwork.getReputationMiningCycle.call(true);
+          let addr = await colonyNetwork.getReputationMiningCycle(true);
           let repCycle = await ReputationMiningCycle.at(addr);
           await forwardTime(3600, this);
-          await repCycle.submitRootHash("0x00", 0, 10);
+          await repCycle.submitRootHash("0x01", 0, 10);
           await repCycle.confirmNewHash(0);
 
-          addr = await colonyNetwork.getReputationMiningCycle.call(true);
+          addr = await colonyNetwork.getReputationMiningCycle(true);
           repCycle = await ReputationMiningCycle.at(addr);
           await forwardTime(3600, this);
 
