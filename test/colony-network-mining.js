@@ -1997,7 +1997,7 @@ contract("ColonyNetworkMining", accounts => {
           await repCycle.submitRootHash("0x00", 0, 10);
           await repCycle.confirmNewHash(0);
 
-          addr = await colonyNetwork.getReputationMiningCycle(true);
+          addr = await colonyNetwork.getReputationMiningCycle.call(true);
           repCycle = await ReputationMiningCycle.at(addr);
           await forwardTime(3600, this);
 
