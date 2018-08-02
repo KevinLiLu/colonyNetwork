@@ -647,8 +647,8 @@ contract ReputationMiningCycle is PatriciaTreeProofs, DSMath {
     ReputationLogEntry storage logEntry = reputationUpdateLog[logEntryNumber];
 
     // Check that the supplied log entry corresponds to this update number
-    require(updateNumber >= logEntry.nPreviousUpdates);
-    require(updateNumber < logEntry.nUpdates + logEntry.nPreviousUpdates);
+    require(updateNumber >= logEntry.nPreviousUpdates, "colony-invalid-before-reputation-proof");
+    require(updateNumber < logEntry.nUpdates + logEntry.nPreviousUpdates, "colony-invalid-before-reputation-proof");
     uint expectedSkillId;
     address expectedAddress;
     (expectedSkillId, expectedAddress) = getExpectedSkillIdAndAddress(logEntry, updateNumber);
@@ -739,7 +739,7 @@ contract ReputationMiningCycle is PatriciaTreeProofs, DSMath {
       // This implies they are claiming that this is a new hash.
       return;
     }
-    require(impliedRoot == jrh);
+    require(impliedRoot == jrh, "colony-invalid-before-reputation-proof");
     // They've actually verified whatever they claimed. We increment their challengeStepCompleted by one to indicate this.
     // In the event that our opponent lied about this reputation not existing yet in the tree, they will both complete
     // a call to respondToChallenge, but we will have a higher challengeStepCompleted value, and so they will be the ones
@@ -864,7 +864,7 @@ contract ReputationMiningCycle is PatriciaTreeProofs, DSMath {
     }
     // Prove that state is in our JRH, in the index corresponding to the last state that the two submissions agree on
     bytes32 impliedRoot = getImpliedRoot(lastAgreeIdxBytes, jhLeafValue, u[U_AGREE_STATE_BRANCH_MASK], agreeStateSiblings);
-    require(impliedRoot == disputeRounds[u[U_ROUND]][u[U_IDX]].jrh);
+    require(impliedRoot == disputeRounds[u[U_ROUND]][u[U_IDX]].jrh, "colony-invalid-newest-reputation-proof");
   }
 
   function saveProvedReputation(uint256[11] u, bytes previousNewReputationValue) internal {

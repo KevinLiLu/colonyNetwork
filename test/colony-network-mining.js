@@ -1943,13 +1943,16 @@ contract("ColonyNetworkMining", accounts => {
       )}`;
 
       await checkErrorRevert(
-        repCycle.respondToChallenge([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], wrongColonyKey, [], "0x01", [], "0x01", [], "0x01", "0x01", [])
+        repCycle.respondToChallenge([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], wrongColonyKey, [], "0x01", [], "0x01", [], "0x01", "0x01", []),
+        "colony-invalid-before-reputation-proof"
       );
       await checkErrorRevert(
-        repCycle.respondToChallenge([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], wrongReputationKey, [], "0x01", [], "0x01", [], "0x01", "0x01", [])
+        repCycle.respondToChallenge([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], wrongReputationKey, [], "0x01", [], "0x01", [], "0x01", "0x01", []),
+        "colony-invalid-before-reputation-proof"
       );
       await checkErrorRevert(
-        repCycle.respondToChallenge([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], wrongUserKey, [], "0x01", [], "0x01", [], "0x01", "0x01", [])
+        repCycle.respondToChallenge([0, 0, 0, 0, 0, 0, 0, 0, 0, 0], wrongUserKey, [], "0x01", [], "0x01", [], "0x01", "0x01", []),
+        "colony-invalid-before-reputation-proof"
       );
 
       await forwardTime(600, this);
